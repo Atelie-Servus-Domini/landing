@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G4PKB783PE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-G4PKB783PE');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Catálogo Imersivo | Servus Domini</title>
+    
+    <link href="https://script.google.com/macros/s/AKfycbxuRi0RkiBYHC2lABoVaETapN5BEX-f-yPPHQUkzynju5Sa1Cq0gZdrXZuaKgxYPTy5/exec" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg: #f7f5f2;
+            --text: #2a2a2a;
+            --accent: #8b1e1e;
+            --white: #ffffff;
+            --muted: #666666;
+        }
+
+        body { 
+            background-color: var(--bg); 
+            color: var(--text); 
+            font-family: 'Inter', sans-serif; 
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Navbar Fixa e Estilizada */
+        #navbar { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 15px 50px; 
+            position: fixed; 
+            top: 0; 
+            width: 100%; 
+            z-index: 1000; 
+            transition: 0.4s; 
+            box-sizing: border-box;
+            background: transparent;
+        }
+
+        #navbar.scrolled { 
+            background: white; 
+            padding: 10px 50px; 
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05); 
+        }
+
+        .nav-group-left, .nav-group-right { flex: 1; display: flex; align-items: center; }
+        .nav-links-center { flex: 2; display: flex; justify-content: center; list-style: none; gap: 30px; margin: 0; padding: 0; }
+        .nav-group-right { justify-content: flex-end; gap: 20px; }
+
+        .logo-box { 
+            font-family: 'Playfair Display', serif;
+            display: flex;         
+            align-items: center; 
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            gap: 15px;
+            text-decoration: none; 
+            color: inherit; 
+            text-transform: uppercase;
+            white-space: nowrap; 
+        }
+        
+        .nav-logo-img { height: 45px; }
+
+        nav ul li a { text-decoration: none; color: inherit; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; font-weight: 500; transition: 0.3s; }
+        nav ul li a:hover { color: var(--accent); }
+
+        /* Dropdown Estilos Desktop */
+        nav ul li.dropdown { position: relative; display: inline-block; }
+        nav ul li.dropdown .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #ffffff;
+            min-width: 200px;
+            border: 1px solid #e0ddd7;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            z-index: 9999;
+            padding: 10px 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        nav ul li.dropdown:hover .dropdown-content { display: block; }
+
+        nav ul li.dropdown .dropdown-content li a {
+            color: #1a1a1a;
+            padding: 12px 20px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            text-decoration: none;
+            transition: 0.3s;
+            background: none;
+        }
+
+        nav ul li.dropdown .dropdown-content li a:hover {
+            background-color: #ece9e4;
+            color: #8b1e1e;
+        }
+
+        /* Elementos de controle Mobile omitidos no Desktop */
+        .menu-toggle { display: none; }
+        .menu-back-btn { display: none; }
+
+        /* Busca Interativa */
+        .search-container { position: relative; display: flex; align-items: center; }
+        .search-bar { 
+            width: 0; 
+            padding: 8px 0; 
+            border: none; 
+            border-bottom: 1px solid var(--text); 
+            background: transparent; 
+            transition: 0.4s; 
+            outline: none; 
+            font-size: 0.8rem;
+            opacity: 0;
+        }
+        .search-bar.active { width: 200px; padding: 8px 15px; opacity: 1; }
+
+        /* Header Imersivo Ajustado para afastar o título das opções */
+        .header-catalogo {
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(247,245,242,0) 0%, rgba(247,245,242,1) 100%);
+            padding: 0 20px;
+            margin-top: 100px;
+        }
+
+        .header-catalogo h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 400;
+            margin-bottom: 80px; /* Distância generosa entre o título e as opções */
+            letter-spacing: -1px;
+        }
+
+        /* Filtros Interativos Próximos aos Produtos */
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 25px; /* Bem mais colado nos cards abaixo */
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: none;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            color: var(--text);
+            padding: 10px 20px;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .filter-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: 0.3s;
+            transform: translateX(-50%);
+        }
+
+        .filter-btn.active::after, .filter-btn:hover::after { width: 30px; }
+
+        /* Grid Imersiva */
+        .obras-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .obra-card {
+            background: var(--white);
+            padding: 15px;
+            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .obra-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .obra-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+        }
+
+        .obra-img-wrapper {
+            overflow: hidden;
+            aspect-ratio: 4/5;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .obra-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.2s ease;
+        }
+
+        .obra-card:hover img { transform: scale(1.08); }
+
+        .obra-meta {
+            padding: 25px 10px;
+            text-align: center;
+        }
+
+        .obra-meta h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            margin: 0 0 8px 0;
+            font-weight: 400;
+        }
+
+        .obra-meta .categoria {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .obra-meta .preco {
+            font-size: 0.9rem;
+            color: var(--text);
+            opacity: 0.8;
+        }
+
+        /* Skeletons */
+        .skeleton-card {
+            background: var(--white);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            animation: fadeInObras 0.5s ease-out forwards;
+        }
+
+        .skeleton-img { width: 100%; aspect-ratio: 4/5; background: #e0ddd7; border-radius: 2px; }
+        .skeleton-text { height: 14px; background: #e0ddd7; margin: 15px auto 8px auto; width: 60%; border-radius: 2px; }
+        .skeleton-subtext { height: 10px; background: #e0ddd7; margin: 0 auto; width: 40%; border-radius: 2px; }
+
+        .pulse .skeleton-img, .pulse .skeleton-text, .pulse .skeleton-subtext {
+            animation: pulseAnimation 1.5s infinite ease-in-out;
+        }
+
+        @keyframes fadeInObras { to { opacity: 1; } }
+        @keyframes pulseAnimation { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+
+        /* Footer */
+        .back-home { text-align: center; padding: 40px 0 0 0; }
+        .back-home a { text-decoration: none; color: var(--text); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        footer { 
+            background: #fff; 
+            padding: 80px 20px; 
+            text-align: center; 
+            margin-top: 100px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .footer-grid { 
+            max-width: 900px; 
+            margin: 40px auto; 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 40px; 
+        }
+
+        .footer-box h4 { font-family: 'Playfair Display', serif; font-weight: 400; font-size: 1.4rem; margin-bottom: 15px; }
+        .footer-box p, .footer-box a { font-size: 0.85rem; color: var(--muted); text-decoration: none; }
+        .footer-box a:hover { color: var(--accent); }
+
+        /* RESPONSIVIDADE (MOBILE UNIFICADO) */
+        @media (max-width: 850px) {
+            #navbar { 
+                padding: 0 20px !important; 
+                height: 70px !important; 
+                display: flex !important;
+                justify-content: flex-start !important; /* Hambúrguer e logo alinhados no início */
+                align-items: center !important;
+                gap: 15px !important;
+            }
+            #navbar.scrolled { padding: 0 20px !important; }
+header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+            /* Hambúrguer rigorosamente à esquerda */
+           .menu-toggle {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    width: 24px !important;
+    height: 16px !important;
+    cursor: pointer !important;
+    z-index: 100000 !important;
+
+    margin-right: auto !important;
+}
+
+
+            .menu-toggle span {
+                display: block !important;
+                width: 100% !important;
+                height: 2px !important;
+                background-color: #1a1a1a !important;
+                border-radius: 2px !important;
+                transition: 0.3s !important;
+            }
+
+            /* Logotipo ao lado do menu, preservando o nome "Servus Domini" */
+            .nav-group-left {
+               margin-right: auto !important;
+}
+            
+            .logo-box {
+                  position: absolute !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+
+    margin: 0 !important;
+    letter-spacing: 1px !important;
+    font-size: 0.95rem !important;
+}
+            
+            .nav-logo-img { height: 35px !important; }
+            .logo-box span { display: inline-block !important; } /* Garante a exibição do nome completo */
+
+            .search-container {
+               
+                margin-left: auto !important; /* Joga a busca para a extrema direita */
+                z-index: 20 !important;
+            }
+
+            /* Botão Fechar no Topo da Gaveta */
+            .menu-back-btn {
+                display: block !important;
+                padding: 20px !important;
+                font-size: 24px !important;
+                color: #1a1a1a !important;
+                cursor: pointer !important;
+                position: absolute !important;
+                top: 15px;
+                left: 15px;
+                z-index: 100001 !important;
+            }
+
+            /* Gaveta Lateral (Menu Drawer) */
+            .nav-links-center {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: auto !important;
+                width: 75% !important;
+                height: 100vh !important;
+                background-color: #fff !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: flex-start !important;
+                padding-top: 100px !important;
+                gap: 25px !important;
+                z-index: 99999 !important;
+                transform: translateX(-100%) !important;
+                transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+                box-shadow: 5px 0 15px rgba(0,0,0,0.1) !important;
+                box-sizing: border-box !important;
+            }
+
+            .nav-links-center.active { 
+                transform: translateX(0) !important; 
+            }
+
+            .nav-links-center a {
+                color: #1a1a1a !important;
+                font-size: 1.2rem !important;
+            }
+
+            /* Dropdown Mobile */
+            nav ul li.dropdown .dropdown-content {
+                position: static !important;
+                box-shadow: none !important;
+                border: none !important;
+                text-align: center !important;
+                display: none;
+            }
+            nav ul li.dropdown:hover .dropdown-content { display: block !important; }
+            nav ul li.dropdown .dropdown-content li a { text-align: center !important; font-size: 1rem !important; }
+
+            /* Ajustes Finos de Layout */
+            .obras-grid { grid-template-columns: 1fr; padding: 15px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; margin: 20px auto; }
+            footer { padding: 60px 20px; margin-top: 80px; }
+        }
+
+        @media (max-width: 600px) {
+            .header-catalogo { padding: 100px 20px 10px 20px; }
+            .header-catalogo h1 { margin-bottom: 50px; } /* Proporção de espaço ajustada para telas muito pequenas */
+            .filter-bar { gap: 8px; margin-bottom: 20px; }
+            .filter-btn { padding: 8px 10px; font-size: 0.75rem; letter-spacing: 1px; }
+        }
+    </style>
+</head>
+
+<body>
+<nav id="navbar">
+    <!-- Menu Hambúrguer à Esquerda -->
+    <div class="menu-toggle" id="mobileMenuBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="nav-group-left">
+        <a href="index.html" class="logo-box">
+            <img src="Logo SD OFICIAL.png" class="nav-logo-img" alt="Logo">
+            <span>SERVUS DOMINI</span>
+        </a>
+    </div>
+
+    <ul class="nav-links-center" id="navLinks">
+        <div class="menu-back-btn" id="menuCloseBtn">←</div>
+        <li><a href="index.html">Início</a></li>
+        <li class="dropdown">
+            <a href="https://atelieservusdomini.neocities.org/catalogo?cat=Todos">Catálogo ▼</a>
+            <ul class="dropdown-content">
+                <li><a href="https://atelieservusdomini.neocities.org/catalogo?cat=Imagens">Imagens</a></li>
+                <li><a href="https://atelieservusdomini.neocities.org/catalogo?cat=Quadros">Quadros</a></li>
+                <li><a href="https://atelieservusdomini.neocities.org/catalogo?cat=Ter%C3%A7os">Terços</a></li>
+            </ul>
+        </li>
+        <li><a href="restauro.html">Restauro</a></li>
+        <li><a href="https://wa.me/5511991381472">Contato</a></li>
+    </ul>
+
+    <div class="nav-group-right">
+        <div class="search-container">
+            <input type="text" class="search-bar" id="searchBar" placeholder="O que você busca?">
+            <i class="fas fa-search" id="searchBtn" style="cursor: pointer;"></i>
+        </div>
+    </div>
+</nav>
+
+    <header class="header-catalogo">
+        <h1 id="pageTitle">Catálogo Completo</h1>
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filtrarCatalogo('Todos', this)">Todos</button>
+            <button class="filter-btn" onclick="filtrarCatalogo('Imagens', this)">Imagens</button>
+            <button class="filter-btn" onclick="filtrarCatalogo('Quadros', this)">Quadros</button>
+            <button class="filter-btn" onclick="filtrarCatalogo('Terços', this)">Terços</button>
+        </div>
+    </header>
+
+    <main class="obras-grid" id="lista-obras">
+    </main>
+
+    <div class="back-home">
+        <a href="index.html">← Voltar ao Início</a>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-box">
+                <h4>Atendimento</h4>
+                <p>(11) 99138-1472</p>
+                <p>servusdominiatelie@gmail.com</p>
+            </div>
+            <div class="footer-box">
+                <h4>O Ateliê</h4>
+                <p>Arte Sacra Original<br>Restauro de Imagens</p>
+            </div>
+            <div class="footer-box">
+                <h4>Siga-nos</h4>
+                <div style="display: flex; gap: 15px; justify-content: center; margin-top: 10px;">
+                    <a href="https://www.instagram.com/atelie_servusdomini"><i class="fab fa-instagram"></i></a>
+                    <a href="http://pinterest.com/atelieservusdomini/"><i class="fab fa-pinterest"></i></a>                  
+                    <a href="https://www.tiktok.com/@atelie_servusdomini"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 11px; color: #ccc; margin-top: 40px;">&copy; 2026 Ateliê Servus Domini</p>
+    </footer>
+
+<script>
+let produtosGlobais = [];
+const urlAPI = "https://script.google.com/macros/s/AKfycbxuRi0RkiBYHC2lABoVaETapN5BEX-f-yPPHQUkzynju5Sa1Cq0gZdrXZuaKgxYPTy5/exec";
+
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const menuCloseBtn = document.getElementById('menuCloseBtn');
+const navLinks = document.getElementById('navLinks');
+
+if(mobileMenuBtn && navLinks) {
+    mobileMenuBtn.onclick = () => navLinks.classList.add('active');
+}
+if(menuCloseBtn && navLinks) {
+    menuCloseBtn.onclick = () => navLinks.classList.remove('active');
+}
+
+const navItems = document.querySelectorAll('.nav-links-center a');
+navItems.forEach(item => {
+    item.addEventListener('click', () => {
+        if(!item.parentNode.classList.contains('dropdown')) {
+            navLinks.classList.remove('active');
+        }
+    });
+});
+
+async function carregarDados() {
+    try {
+        const grid = document.getElementById('lista-obras');
+        grid.innerHTML = `
+            <div class="skeleton-card pulse"><div class="skeleton-img"></div><div class="skeleton-text"></div><div class="skeleton-subtext"></div></div>
+            <div class="skeleton-card pulse"><div class="skeleton-img"></div><div class="skeleton-text"></div><div class="skeleton-subtext"></div></div>
+            <div class="skeleton-card pulse"><div class="skeleton-img"></div><div class="skeleton-text"></div><div class="skeleton-subtext"></div></div>
+        `;
+
+        const script = document.createElement('script');
+        script.src = urlAPI + "?callback=processarCatalogo&t=" + Date.now();
+        document.body.appendChild(script);
+
+        window.processarCatalogo = function(dados) {
+            produtosGlobais = dados;
+            const urlParams = new URLSearchParams(window.location.search);
+            const catURL = urlParams.get('cat');
+            
+            if (catURL && catURL !== 'null') {
+                const botoes = document.querySelectorAll('.filter-btn');
+                botoes.forEach(b => {
+                    if(b.textContent.toLowerCase() === catURL.toLowerCase()) b.classList.add('active');
+                    else b.classList.remove('active');
+                });
+                filtrarCatalogo(catURL);
+            } else {
+                exibirProdutos(produtosGlobais);
+            }
+        };
+    } catch (err) {
+        console.error("Erro ao conectar catálogo:", err);
+        document.getElementById('lista-obras').innerHTML = '<p style="grid-column: 1/-1; text-align:center; padding: 50px; opacity: 0.6;">Erro ao carregar o catálogo.</p>';
+    }
+}
+
+function exibirProdutos(lista) {
+    const grid = document.getElementById('lista-obras');
+    grid.innerHTML = '';
+
+    if (lista.length === 0) {
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; padding: 50px; opacity: 0.6;">Nenhuma obra encontrada.</p>';
+        return;
+    }
+
+    lista.forEach((p, index) => {
+        const card = document.createElement('div');
+        card.className = 'obra-card';
+        
+        const idParaEnvio = p.id || index;
+        card.onclick = () => window.location.href = `produtos.html?id=${idParaEnvio}`;
+        
+        const nome = p.nome || p.title || p.titulo || "Obra sem título";
+        let imagem = p.imagem || p.image_link || p['image link'] || p.foto || p.imagem_link;
+        const categoriaPlanilha = p['product_type'] || p['product type'] || p.categoria || "Artesanato";
+        const categoria = categoriaPlanilha.trim();
+        const preco = p.preco || p.price || "Consulte";
+
+        card.innerHTML = `
+            <div class="obra-img-wrapper">
+                <img src="${imagem}" 
+                     alt="${nome}" 
+                     loading="lazy"
+                     onload="this.style.opacity='1'"
+                     style="opacity:0; transition: opacity 0.5s;">
+            </div>
+            <div class="obra-meta">
+                <span class="categoria">${categoria}</span>
+                <h3>${nome}</h3>
+                <p class="preco">R$ ${preco}</p>
+            </div>
+        `;
+        
+        grid.appendChild(card);
+        setTimeout(() => card.classList.add('show'), index * 100);
+    });
+}
+
+function filtrarCatalogo(categoria, botaoClicado) {
+    if(botaoClicado) {
+        const botoes = document.querySelectorAll('.filter-btn');
+        botoes.forEach(b => b.classList.remove('active'));
+        botaoClicado.classList.add('active');
+    }
+
+    if (categoria === 'Todos') {
+        exibirProdutos(produtosGlobais);
+        document.getElementById('pageTitle').textContent = "Catálogo Completo";
+    } else {
+        const filtrados = produtosGlobais.filter(p => {
+            const catProd = (p['product_type'] || p['product type'] || p.categoria || "").trim().toLowerCase();
+            return catProd === categoria.toLowerCase();
+        });
+        exibirProdutos(filtrados);
+        document.getElementById('pageTitle').textContent = categoria;
+    }
+}
+
+window.onload = carregarDados;
+
+window.onscroll = () => {
+    const nav = document.getElementById('navbar');
+    if (window.pageYOffset > 50) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+};
+
+const searchBtn = document.getElementById('searchBtn');
+const searchBar = document.getElementById('searchBar');
+if(searchBtn) {
+    searchBtn.onclick = () => {
+        searchBar.classList.toggle('active');
+        if(searchBar.classList.contains('active')) searchBar.focus();
+    };
+}
+</script>
+</body>
+</html>
