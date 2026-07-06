@@ -1045,7 +1045,7 @@ O sagrado permanece.</h1>
                 Cada restauração é tratada com o mesmo respeito e devoção que a imagem merece.
             </p>
             <p>
-    <a href="restauro.html" class="button">
+    <a href="restauro.html" class="button" style="margin-top: 50px;">
         Conheça Nossos Restauros
     </a>
 </p>
@@ -1490,74 +1490,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-                
-
-                const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target); // evita reprocessar
-        }
-    });
-}, {
-    threshold: 0.1
-});
-
-                function observarReveals() {
-    document.querySelectorAll('.reveal').forEach(el => {
-        observer.observe(el);
-    });
-}
-
-                document.addEventListener('DOMContentLoaded', function() {
-
-    const btnMobile = document.getElementById('mobile-menu');
-    const navList = document.querySelector('.nav-list');
-    const searchBtn = document.getElementById('searchBtn');
-    const searchBar = document.getElementById('searchBar');
-
-    if (btnMobile && navList) {
-        btnMobile.onclick = function() {
-            navList.classList.toggle('active');
-            btnMobile.classList.toggle('open');
-        };
-    }
-
-    if (searchBtn && searchBar) {
-        searchBtn.onclick = () => {
-            searchBar.classList.toggle('active');
-            if (searchBar.classList.contains('active')) searchBar.focus();
-        };
-    }
-
-    document.querySelectorAll('.faq-question').forEach(button => {
-        button.addEventListener('click', () => {
-            button.parentElement.classList.toggle('active');
-        });
-    });
-
-    carregarObras();
-});
-
-                grid.innerHTML = htmlGerado;
-
-// ativa animação corretamente
-setTimeout(() => {
-    observarReveals();
-}, 50);
 
     </script>
 </body> 
